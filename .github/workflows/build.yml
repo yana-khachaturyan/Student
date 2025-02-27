@@ -1,0 +1,20 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  ubuntu-build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.0.0
+    - name: Install g++ compiler
+      run: sudo apt-get update && sudo apt-get install -y g++
+    - name: Verify g++ version
+      run: g++ --version
+    - name: Build project
+      run: |
+        g++ -o my_program index.cpp
+        
+
+       
