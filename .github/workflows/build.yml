@@ -15,6 +15,10 @@ jobs:
     - name: Build project
       run: |
         g++ -o my_program index.cpp
-        
+    - name: 'Upload Artifact'
+      uses: actions/upload-artifact@v4
+      with:
+       name: my-artifact
+       path: my_program
 
        
