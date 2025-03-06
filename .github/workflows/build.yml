@@ -20,5 +20,11 @@ jobs:
       with:
        name: my-artifact
        path: my_program
+    - name: Create Tag
+      run: |
+          git config --local user.email "yana.khachaturyan.02@bk.ru"
+          git config --local user.name "yana-khachaturyan"
+          git tag -a "v${{ github.run_number }}" -m "Release v${{ github.run_number }}"
+          git push origin "v${{ github.run_number }}"
 
        
