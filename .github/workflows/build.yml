@@ -19,12 +19,23 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
        name: my-artifact
-       path: my_program
-    - name: Create Tag
+       path: my_program        
+    - name: Configure git to use GitHub Actions token
       run: |
           git config --local user.email "yan.khachaturyan95@gmail.com"
           git config --local user.name "yana-khachaturyan"
-          git tag -a "v${{ github.run_number }}" -m "Release v${{ github.run_number }}"
-          git push origin "v${{ github.run_number }}"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
 
+    - name: 'Get Previous tag'
+      id: previous_tag
+      uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      with:
+        fallback: 1.0.0
+     
+    - name: Release        
+      uses: softprops/action-gh-release@v1
+      with:
+          tag_name: ${{steps.previous_tag.outputs.tag}}
+          files: ${{steps.sign_app.outputs.signedReleaseFile}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
        
