@@ -26,6 +26,11 @@ jobs:
           git config --local user.name "yana-khachaturyan"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
 
+    - name: Create Tag
+      run: |
+        git tag -a "v${{ github.run_number }}" -m "Release 1.0.0"
+        git push origin "v${{ github.run_number }}"   
+
     - name: 'Get Previous tag'
       id: previous_tag
       uses: "WyriHaximus/github-action-get-previous-tag@v1"
