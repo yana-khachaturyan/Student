@@ -3,7 +3,7 @@ name: C/C++ CI
 on: [push]
 
 env:
-  FILE_NAME: new.cpp
+  FILE_NAME: index.cpp
 
 permissions:
   contents: write 
