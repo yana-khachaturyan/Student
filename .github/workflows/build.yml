@@ -3,7 +3,7 @@ name: C/C++ CI
 on: [push]
 
 env:
-  DAY_OF_WEEK: Monday
+  FILE_NAME: new.cpp
 
 permissions:
   contents: write 
@@ -11,13 +11,7 @@ permissions:
 jobs:
   ubuntu-build:
     runs-on: ubuntu-latest
-    env:
-      Greeting: Hello
     steps:
-    - name: "Say Hello Mona it's Monday"
-      run: echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
-      env:
-          First_Name: Mona
     - name: Checkout
       uses: actions/checkout@v2.0.0
     - name: Install g++ compiler
@@ -26,7 +20,7 @@ jobs:
       run: g++ --version
     - name: Build project
       run: |
-        g++ -o my_program index.cpp
+        g++ -o my_program $FILE_NAME
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v4
       with:
