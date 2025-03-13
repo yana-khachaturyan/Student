@@ -15,9 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        OUTPUT_FILE: [hello1, hello2, hello3]
-        FILE_NAME: [new1.cpp, new2.cpp, new3.cpp]
-
+        # OUTPUT_FILE: [{in: new1.cpp, out: hello1.out }, {in: new2.cpp, out: hello2.out }, {in: new3.cpp, out: hello3.out }]
+         files:
+          - new1.cpp:hello1.out
+          - new2.cpp:hello2.out
+          - new3.cpp:hello3.out
     steps:
     - name: Checkout
       uses: actions/checkout@v2.0.0
@@ -27,7 +29,8 @@ jobs:
       run: g++ --version
     - name: Build project
       run: |
-            g++ -o ${{ matrix.OUTPUT_FILE }} ${{ matrix.FILE_NAME }}
+            # g++ -o $output_file $input_file
+            
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v4
       with:
