@@ -3,8 +3,9 @@ name: C/C++ CI
 on: 
  workflow_dispatch:
 
-env:
-  FILE_NAME: index.cpp
+
+# env:
+#   FILE_NAME: index.cpp
 
 permissions:
   contents: write 
@@ -12,6 +13,10 @@ permissions:
 jobs:
   ubuntu-build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        FILE_NAME: [new1.cpp, new2.cpp, new3.cpp]
+
     steps:
     - name: Checkout
       uses: actions/checkout@v2.0.0
@@ -21,7 +26,7 @@ jobs:
       run: g++ --version
     - name: Build project
       run: |
-        g++ -o my_program $FILE_NAME
+        g++ -o my_program ${{ matrix.FILE_NAME }}
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v4
       with:
