@@ -44,11 +44,4 @@ jobs:
           git config --local user.name "yana-khachaturyan"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
 
- 
-    - name: Release        
-      uses: softprops/action-gh-release@v1
-      with:
-          tag_name: ${{steps.previous_tag.outputs.tag}}
-          files: ${{steps.sign_app.outputs.signedReleaseFile}}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       
+
