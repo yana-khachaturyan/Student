@@ -29,7 +29,9 @@ jobs:
       run: g++ --version
     - name: Build project
       run: |
-            # g++ -o $output_file $input_file
+         IFS=":" read -r input_file output_file <<< "${{ matrix.files }}"
+         echo "Building $input_file -> $output_file"
+         g++ -o $output_file $input_file
             
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v4
@@ -42,17 +44,7 @@ jobs:
           git config --local user.name "yana-khachaturyan"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
 
-    - name: Create Tag
-      run: |
-        git tag -a "v${{ github.run_number }}" -m "Release 1.0.0"
-        git push origin "v${{ github.run_number }}"   
-
-    - name: 'Get Previous tag'
-      id: previous_tag
-      uses: "WyriHaximus/github-action-get-previous-tag@v1"
-      with:
-        fallback: 1.0.0
-     
+ 
     - name: Release        
       uses: softprops/action-gh-release@v1
       with:
