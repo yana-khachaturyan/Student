@@ -16,10 +16,13 @@ jobs:
     strategy:
       matrix:
         # OUTPUT_FILE: [{in: new1.cpp, out: hello1.out }, {in: new2.cpp, out: hello2.out }, {in: new3.cpp, out: hello3.out }]
-         files:
-          - new1.cpp:hello1.out
-          - new2.cpp:hello2.out
-          - new3.cpp:hello3.out
+         include:
+           - inpFile: "new1.cpp"
+             outFile: "hello1.out"
+           - inpFile: "new2.cpp"
+             outFile: "hello2.out"
+           - inpFile: "new3.cpp"
+             outFile: "hello3.out"       
     steps:
     - name: Checkout
       uses: actions/checkout@v2.0.0
@@ -29,9 +32,9 @@ jobs:
       run: g++ --version
     - name: Build project
       run: |
-         IFS=":" read -r input_file output_file <<< "${{ matrix.files }}"
-         echo "Building $input_file -> $output_file"
-         g++ -o $output_file $input_file
+        echo "Compiling ${matrix.inpFile}..."
+        g++ ${matrix.inpFile} -o ${matrix.outFile}
+        ./${matrix.outFile}
            
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v4
