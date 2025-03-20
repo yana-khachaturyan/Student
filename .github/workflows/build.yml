@@ -32,10 +32,10 @@ jobs:
       run: g++ --version
     - name: Build project
       run: |
-        echo "Compiling ${matrix.inpFile}..."
-        g++ ${matrix.inpFile} -o ${matrix.outFile}
-        ./${matrix.outFile}
-           
+        input_file="${{ matrix.inputFile }}"
+        output_file="${{ matrix.outputFile }}"
+        echo "Building $input_file -> $output_file"
+        g++ -o "$output_file" "$input_file"
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v4
       with:
