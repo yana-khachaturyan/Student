@@ -1,6 +1,6 @@
 name: C/C++ CI
 
-on: 
+on:
  workflow_dispatch:
 
 
@@ -8,23 +8,18 @@ on:
 #   FILE_NAME: index.cpp
 
 permissions:
-  contents: write 
-  
+  contents: write
+ 
 jobs:
   ubuntu-build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        os:
-          - new1.cpp
-          - new2.cpp
-          - new3.cpp
-        outputs:
-          - hello1.out
-          - hello2.out
-          - hello3.out
-
-
+        # OUTPUT_FILE: [{in: new1.cpp, out: hello1.out }, {in: new2.cpp, out: hello2.out }, {in: new3.cpp, out: hello3.out }]
+         files:
+          - new1.cpp:hello1.out
+          - new2.cpp:hello2.out
+          - new3.cpp:hello3.out
     steps:
     - name: Checkout
       uses: actions/checkout@v2.0.0
@@ -34,9 +29,10 @@ jobs:
       run: g++ --version
     - name: Build project
       run: |
-        echo "Compiling ${matrix.os}..."
-        g++ ${matrix.os} -o ${matrix.outputs}
-        ./${matrix.outputs}
+         IFS=":" read -r input_file output_file <<< "${{ matrix.files }}"
+         echo "Building $input_file -> $output_file"
+         g++ -o $output_file $input_file
+           
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v4
       with:
@@ -47,5 +43,3 @@ jobs:
           git config --local user.email "yan.khachaturyan95@gmail.com"
           git config --local user.name "yana-khachaturyan"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-
-
