@@ -17,12 +17,12 @@ jobs:
       matrix:
         # OUTPUT_FILE: [{in: new1.cpp, out: hello1.out }, {in: new2.cpp, out: hello2.out }, {in: new3.cpp, out: hello3.out }]
          include:
-           - inpFile: "new1.cpp"
-             outFile: "hello1.out"
-           - inpFile: "new2.cpp"
-             outFile: "hello2.out"
-           - inpFile: "new3.cpp"
-             outFile: "hello3.out"       
+           - inputFile: "new1.cpp"
+             outputFile: "hello1.out"
+           - inputFile: "new2.cpp"
+             outputFile: "hello2.out"
+           - inputFile: "new3.cpp"
+             outputFile: "hello3.out"       
     steps:
     - name: Checkout
       uses: actions/checkout@v2.0.0
