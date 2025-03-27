@@ -1,7 +1,6 @@
 name: C/C++ CI
 
-on:
- workflow_dispatch:
+on: push
 
 
 # env:
@@ -30,6 +29,8 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y g++
     - name: Verify g++ version
       run: g++ --version
+    - name: sleep
+      run: sleep 60s
     - name: Build project
       run: |
         input_file="${{ matrix.inputFile }}"
