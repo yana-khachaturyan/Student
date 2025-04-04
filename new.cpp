@@ -1,6 +1,6 @@
 #include <iostream>
 
-int main() {
+int main() 
     std::cout << "newF2266662ile";
     return 0;
 }
