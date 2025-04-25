@@ -11,9 +11,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-# env:
-#   FILE_NAME: index.cpp
-
 permissions:
   contents: write
  
@@ -34,17 +31,6 @@ jobs:
       run: |
     - name: Print the input tag to STDOUT
       run: echo  The tags are ${{ inputs.fileName }} 
-        g++ -o "${{ inputs.fileName }}-out" "${{ inputs.fileName }}"
-
-    - name: 'Upload Artifact'
-      uses: actions/upload-artifact@v4
-      with:
-       name: my-artifact
-       path: my_program        
-    - name: Configure git to use GitHub Actions token
-      run: |
-          git config --local user.email "yan.khachaturyan95@gmail.com"
-          git config --local user.name "yana-khachaturyan"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        g++ "${{ inputs.fileName }}"
       if: ${{success()}} 
 
