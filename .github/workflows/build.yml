@@ -6,7 +6,7 @@ on:
       fileName: 
         description: 'this is user input for c++ file'
         required: true
-        default: 'new1.cpp'
+        default: 'new2.cpp'
         type: choice
         options:
           - new1.cpp
