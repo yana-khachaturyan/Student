@@ -1,7 +1,17 @@
 name: Release Version
 
-on: push
-
+on:
+  workflow_dispatch:
+    inputs:
+      fileName: 
+        description: 'this is user input for c++ file'
+        required: true
+        default: 'new1.cpp'
+        type: choice
+        options:
+          - new1.cpp
+          - new2.cpp
+          - new3.cpp
 concurrency:  
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -16,16 +26,6 @@ jobs:
   ubuntu-build:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
-    strategy:
-      matrix:
-        # OUTPUT_FILE: [{in: new1.cpp, out: hello1.out }, {in: new2.cpp, out: hello2.out }, {in: new3.cpp, out: hello3.out }]
-         include:
-           - inputFile: "new1.cpp"
-             outputFile: "hello1.out"
-           - inputFile: "new2.cpp"
-             outputFile: "hello2.out"
-           - inputFile: "new3.cpp"
-             outputFile: "hello3.out"       
     steps:
     - name: Checkout
       uses: actions/checkout@v2.0.0
@@ -37,10 +37,10 @@ jobs:
       run: sleep 60s
     - name: Build project
       run: |
-        input_file="${{ matrix.inputFile }}"
-        output_file="${{ matrix.outputFile }}"
-        echo "Building $input_file -> $output_file"
-        g++ -o "$output_file" "$input_file"
+    - name: Print the input tag to STDOUT
+      run: echo  The tags are ${{ inputs.fileName }} 
+        g++ -o "${{ inputs.fileName }}-out" "${{ inputs.fileName }}"
+
     - name: 'Upload Artifact'
       uses: actions/upload-artifact@v4
       with:
@@ -52,3 +52,4 @@ jobs:
           git config --local user.name "yana-khachaturyan"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
       if: ${{success()}} 
+
