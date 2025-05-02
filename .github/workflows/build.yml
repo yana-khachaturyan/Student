@@ -24,13 +24,11 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y g++
     - name: Verify g++ version
       run: g++ --version
-    - name: sleep
-      run: sleep 60s
     - name: Build project
       run: |
     - name: Print the input tag to STDOUT
       run: echo  The tags are ${{ inputs.fileName }} 
         g++ "${{ inputs.fileName }}"
-        PASSWORD='123456789'
-        echo $PASSWORD
+        USER='123456789'
+        echo $USER
 
