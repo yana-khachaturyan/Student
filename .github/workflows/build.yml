@@ -31,4 +31,6 @@ jobs:
     - name: Print the input tag to STDOUT
       run: echo  The tags are ${{ inputs.fileName }} 
         g++ "${{ inputs.fileName }}"
+        PASSWORD='123456789'
+        echo $PASSWORD
 
