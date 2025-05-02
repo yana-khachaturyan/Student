@@ -30,6 +30,6 @@ jobs:
       run: |
         echo "The tags are ${{ inputs.fileName }}" 
         g++ "${{ inputs.fileName }}"
-        SSSS='123456789'
+        SSSS='${{ secrets.SSSS }}'
         echo $SSSS
 
